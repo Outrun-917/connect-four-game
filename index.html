@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Connect four game</title>
+
+    <link rel="stylesheet" href="./css/normalize.css" />
+    <link rel="stylesheet" href="./css/reset.css" />
+    <link rel="stylesheet" href="./css/main.css" />
+  </head>
+  <body>
+    <main class="main-wrapper">
+      <div class="game-board">
+        <img
+          class="game-board__front"
+          src="./assets/board-layer-white-large.svg"
+          alt=""
+        />
+
+        <img
+          class="game-board__back"
+          src="./assets/board-layer-black-large.svg"
+          alt=""
+        />
+
+        <div class="game-cell" data-x="0" data-y="0"></div>
+        <div class="game-cell" data-x="1" data-y="0"></div>
+        <div class="game-cell" data-x="2" data-y="0"></div>
+        <div class="game-cell" data-x="3" data-y="0">
+          <img src="./assets/counter-yellow-large.svg" alt="" />
+        </div>
+        <div class="game-cell" data-x="4" data-y="0"></div>
+        <div class="game-cell" data-x="5" data-y="0">
+          <img src="./assets/counter-yellow-large.svg" alt="" />
+        </div>
+        <div class="game-cell" data-x="6" data-y="0">
+          <img src="./assets/counter-red-large.svg" alt="" />
+        </div>
+        <div class="game-cell" data-x="0" data-y="1">
+          <img src="./assets/counter-yellow-large.svg" alt="" />
+        </div>
+        <div class="game-cell" data-x="1" data-y="1">
+          <img src="./assets/counter-red-large.svg" alt="" />
+        </div>
+        <div class="game-cell" data-x="2" data-y="1">
+          <img src="./assets/counter-yellow-large.svg" alt="" />
+        </div>
+        <div class="game-cell" data-x="3" data-y="1">
+          <img src="./assets/counter-red-large.svg" alt="" />
+        </div>
+        <div class="game-cell" data-x="4" data-y="1">
+          <img src="./assets/counter-yellow-large.svg" alt="" />
+        </div>
+        <div class="game-cell" data-x="5" data-y="1">
+          <img src="./assets/counter-red-large.svg" alt="" />
+        </div>
+        <div class="game-cell" data-x="6" data-y="1">
+          <img src="./assets/counter-yellow-large.svg" alt="" />
+        </div>
+        <div class="game-cell" data-x="0" data-y="2">
+          <img src="./assets/counter-red-large.svg" alt="" />
+        </div>
+        <div class="game-cell" data-x="1" data-y="2">
+          <img src="./assets/counter-yellow-large.svg" alt="" />
+        </div>
+        <div class="game-cell" data-x="2" data-y="2">
+          <img src="./assets/counter-red-large.svg" alt="" />
+        </div>
+        <div class="game-cell" data-x="3" data-y="2">
+          <img src="./assets/counter-yellow-large.svg" alt="" />
+        </div>
+        <div class="game-cell" data-x="4" data-y="2">
+          <img src="./assets/counter-red-large.svg" alt="" />
+        </div>
+        <div class="game-cell" data-x="5" data-y="2">
+          <img src="./assets/counter-yellow-large.svg" alt="" />
+        </div>
+        <div class="game-cell" data-x="6" data-y="2">
+          <img src="./assets/counter-red-large.svg" alt="" />
+        </div>
+        <div class="game-cell" data-x="0" data-y="3">
+          <img src="./assets/counter-yellow-large.svg" alt="" />
+        </div>
+        <div class="game-cell" data-x="1" data-y="3">
+          <img src="./assets/counter-red-large.svg" alt="" />
+        </div>
+        <div class="game-cell" data-x="2" data-y="3">
+          <img src="./assets/counter-yellow-large.svg" alt="" />
+        </div>
+        <div class="game-cell" data-x="3" data-y="3">
+          <img src="./assets/counter-red-large.svg" alt="" />
+        </div>
+        <div class="game-cell" data-x="4" data-y="3">
+          <img src="./assets/counter-yellow-large.svg" alt="" />
+        </div>
+        <div class="game-cell" data-x="5" data-y="3">
+          <img src="./assets/counter-red-large.svg" alt="" />
+        </div>
+        <div class="game-cell" data-x="6" data-y="3">
+          <img src="./assets/counter-yellow-large.svg" alt="" />
+        </div>
+        <div class="game-cell" data-x="0" data-y="4">
+          <img src="./assets/counter-red-large.svg" alt="" />
+        </div>
+        <div class="game-cell" data-x="1" data-y="4">
+          <img src="./assets/counter-yellow-large.svg" alt="" />
+        </div>
+        <div class="game-cell" data-x="2" data-y="4">
+          <img src="./assets/counter-red-large.svg" alt="" />
+        </div>
+        <div class="game-cell" data-x="3" data-y="4">
+          <img src="./assets/counter-yellow-large.svg" alt="" />
+        </div>
+        <div class="game-cell" data-x="4" data-y="4">
+          <img src="./assets/counter-red-large.svg" alt="" />
+        </div>
+        <div class="game-cell" data-x="5" data-y="4">
+          <img src="./assets/counter-yellow-large.svg" alt="" />
+        </div>
+        <div class="game-cell" data-x="6" data-y="4">
+          <img src="./assets/counter-red-large.svg" alt="" />
+        </div>
+        <div class="game-cell" data-x="0" data-y="5">
+          <img src="./assets/counter-yellow-large.svg" alt="" />
+        </div>
+        <div class="game-cell" data-x="1" data-y="5">
+          <img src="./assets/counter-red-large.svg" alt="" />
+        </div>
+        <div class="game-cell" data-x="2" data-y="5">
+          <img src="./assets/counter-yellow-large.svg" alt="" />
+        </div>
+        <div class="game-cell" data-x="3" data-y="5">
+          <img src="./assets/counter-red-large.svg" alt="" />
+        </div>
+        <div class="game-cell" data-x="4" data-y="5">
+          <img src="./assets/counter-yellow-large.svg" alt="" />
+        </div>
+        <div class="game-cell" data-x="5" data-y="5">
+          <img src="./assets/counter-red-large.svg" alt="" />
+        </div>
+        <div class="game-cell" data-x="6" data-y="5">
+          <img src="./assets/counter-yellow-large.svg" alt="" />
+        </div>
+      </div>
+    </main>
+    <script src="./js/app.js"></script>
+  </body>
+</html>

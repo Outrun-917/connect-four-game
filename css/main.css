@@ -1,0 +1,44 @@
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #7945ff;
+}
+
+.main-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-board {
+  position: relative;
+
+  width: 632px;
+  height: 584px;
+
+  padding: 16px;
+  padding-bottom: 40px;
+
+  display: grid;
+  grid-template-columns: repeat(7, 72px);
+  gap: 4px 16px;
+}
+
+.game-board__front {
+  position: absolute;
+  z-index: 2;
+}
+
+.game-board__back {
+  position: absolute;
+  z-index: -1;
+}
+
+.game-cell {
+  height: 72px;
+  width: 72px;
+  z-index: 1;
+}
