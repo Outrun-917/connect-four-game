@@ -6,6 +6,10 @@ body {
   background-color: #7945ff;
 }
 
+.filled {
+    z-index: 2 !important;
+}
+
 .main-wrapper {
   min-height: 100vh;
   display: flex;
@@ -29,7 +33,7 @@ body {
 
 .game-board__front {
   position: absolute;
-  z-index: 2;
+  z-index: 10;
 }
 
 .game-board__back {
@@ -40,5 +44,9 @@ body {
 .game-cell {
   height: 72px;
   width: 72px;
-  z-index: 1;
+  z-index: 20;
+}
+
+.game-cell__counter {
+    z-index: 1;
 }
