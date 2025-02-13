@@ -1,9 +1,21 @@
+:root {
+  --black: #000000;
+  --dark-purple: #5c2dd5;
+  --purple: #7945ff;
+  --red: #fd6687;
+  --white: #ffffff;
+  --yellow: #ffce67;
+
+  --font-family: "Space Grotesk", serif;
+}
+
 body {
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #7945ff;
+  background-color: var(--purple);
+  font-family: var(--font-family);
 }
 
 .filled {
@@ -14,11 +26,77 @@ body {
   display: none !important;
 }
 
+.game-on {
+  bottom: -730px;
+  border-radius: 60px;
+}
+
 .main-wrapper {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.background-color-turn-indicator {
+  position: absolute;
+  min-height: 100vh;
+  min-width: 100%;
+  z-index: -20;
+  background-color: var(--dark-purple);
+}
+
+.game-menu {
+  width: 480px;
+  height: 435px;
+  background-color: var(--purple);
+  z-index: 10;
+  border-radius: 40px;
+  border: solid var(--black) 3px;
+  border-bottom: solid var(--black) 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.game-menu__logo {
+  width: 52px;
+  height: 52px;
+  margin-top: 72px;
+}
+
+.game-menu-button {
+  width: 400px;
+  height: 72px;
+  border-radius: 20px;
+  border: solid var(--black) 3px;
+  border-bottom: solid var(--black) 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--black);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 32px;
+  padding-left: 18px;
+  padding-right: 18px;
+  transition: 0.2s;
+}
+
+.game-menu-button:hover {
+  cursor: pointer;
+  border-color: var(--dark-purple);
+}
+
+.game-menu-button__play-pvp {
+  margin-top: 80px;
+  background-color: var(--yellow);
+}
+
+.game-menu-button__game-rules {
+  margin-top: 16px;
 }
 
 .game-screen {
@@ -53,4 +131,73 @@ body {
 
 .game-cell__counter {
   z-index: 1;
+}
+
+.game-rules {
+  width: 480px;
+  height: 540px;
+  position: relative;
+  background-color: var(--white);
+  border-radius: 40px;
+  border: solid var(--black) 3px;
+  border-bottom: solid var(--black) 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 32px;
+}
+
+.game-rules__title {
+  text-align: center;
+  font-weight: 700;
+  font-size: 56px;
+  line-height: 72px;
+}
+
+.game-rules__second-title {
+  margin-top: 32px;
+  margin-bottom: 16px;
+  color: var(--purple);
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.game-rules__content {
+  font-weight: 500;
+  opacity: 0.65;
+}
+
+.game-rules__list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.game-rules__list-element {
+  counter-increment: num;
+}
+
+.game-rules__list-element::before {
+  content: counter(num);
+  margin-right: 20px;
+}
+
+.game-rules__button {
+  width: fit-content;
+  background-color: #00000000;
+  border: none;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.game-rules__button:hover {
+  cursor: pointer;
+}
+
+#Oval-Copy-37,
+#Oval-Copy-38 {
+  transition: 0.2s;
+}
+
+.game-rules__button:hover #Oval-Copy-37,
+.game-rules__button:hover #Oval-Copy-38 {
+  fill: var(--dark-purple);
 }

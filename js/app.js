@@ -1,7 +1,14 @@
-// Victor si tu copie tu verras.
-
+const $gameMenu = document.querySelector(".game-menu");
+const $gameScreen = document.querySelector(".game-screen");
+const $gameRules = document.querySelector(".game-rules");
+const $gameMenuButtons = document.querySelectorAll(".game-menu-button");
+const $gameRulesButton = document.querySelector(".game-rules__button");
 const $gameScreenBoardCells = document.querySelectorAll(
   ".game-screen-board__cell"
+);
+
+const $backgroundColorTurnIndicator = document.querySelector(
+  ".background-color-turn-indicator"
 );
 
 const redCounterImage = `<img src="./assets/counter-red-large.svg" alt="" />`;
@@ -18,6 +25,27 @@ let gameBoard = [
 ];
 
 console.log(gameBoard);
+
+$gameMenuButtons.forEach(function ($gameMenuButton) {
+  $gameMenuButton.addEventListener("click", function () {
+    if (this === $gameMenuButtons[0]) {
+      $gameMenu.classList.add("hidden");
+      $gameScreen.classList.remove("hidden");
+      document;
+      $backgroundColorTurnIndicator.classList.add("game-on");
+    } else {
+      $gameMenu.classList.add("hidden");
+      $gameRules.classList.remove("hidden");
+      $backgroundColorTurnIndicator.classList.add("hidden");
+    }
+  });
+});
+
+$gameRulesButton.addEventListener("click", function () {
+  $gameRules.classList.add("hidden");
+  $gameMenu.classList.remove("hidden");
+  $backgroundColorTurnIndicator.classList.remove("hidden");
+});
 
 // Vérification de la victoire, à chaque tour, le tableau de jeu est scanné
 function checkWin(board) {
