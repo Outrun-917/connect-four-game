@@ -1,9 +1,11 @@
 // Victor si tu copie tu verras.
 
-const $gameCells = document.querySelectorAll(".game-cell");
+const $gameScreenBoardCells = document.querySelectorAll(
+  ".game-screen-board__cell"
+);
 
-const playerOne = `<img src="./assets/counter-red-large.svg" alt="" />`;
-const playerTwo = `<img src="./assets/counter-yellow-large.svg" alt="" />`;
+const redCounterImage = `<img src="./assets/counter-red-large.svg" alt="" />`;
+const yellowCounterImage = `<img src="./assets/counter-yellow-large.svg" alt="" />`;
 
 let currentPlayer = "r";
 let gameBoard = [
@@ -83,15 +85,15 @@ function checkWin(board) {
   return false;
 }
 
-$gameCells.forEach(function ($gameCell) {
-  $gameCell.innerHTML = "";
-  $gameCell.classList.remove("filled");
+$gameScreenBoardCells.forEach(function ($gameScreenBoardCell) {
+  $gameScreenBoardCell.innerHTML = "";
+  $gameScreenBoardCell.classList.remove("filled");
 });
 
 // event listener for gameCell click event
-$gameCells.forEach(function ($gameCell) {
-  $gameCell.addEventListener("click", function () {
-    const dataX = $gameCell.getAttribute("data-x");
+$gameScreenBoardCells.forEach(function ($gameScreenBoardCell) {
+  $gameScreenBoardCell.addEventListener("click", function () {
+    const dataX = $gameScreenBoardCell.getAttribute("data-x");
 
     function counterDrop(playerCounter) {
       for (let i = 5; i >= 0; i--) {
@@ -100,11 +102,13 @@ $gameCells.forEach(function ($gameCell) {
           gameBoard[i][dataX] = currentPlayer;
 
           document.querySelector(
-            `.game-cell[data-y="${i}"][data-x="${dataX}"]`
+            `.game-screen-board__cell[data-y="${i}"][data-x="${dataX}"]`
           ).innerHTML = playerCounter;
 
           document
-            .querySelector(`.game-cell[data-y="${i}"][data-x="${dataX}"]`)
+            .querySelector(
+              `.game-screen-board__cell[data-y="${i}"][data-x="${dataX}"]`
+            )
             .classList.add("filled");
 
           break;
@@ -115,14 +119,14 @@ $gameCells.forEach(function ($gameCell) {
     }
 
     if (currentPlayer === "r") {
-      counterDrop(playerOne);
+      counterDrop(redCounterImage);
       const isWin = checkWin(gameBoard);
       if (isWin) {
         console.log(`Le joueur ${currentPlayer} a gagné !`);
       }
       currentPlayer = "y";
     } else {
-      counterDrop(playerTwo);
+      counterDrop(yellowCounterImage);
       const isWin = checkWin(gameBoard);
       if (isWin) {
         console.log(`Le joueur ${currentPlayer} a gagné !`);

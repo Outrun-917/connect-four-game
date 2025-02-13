@@ -7,7 +7,11 @@ body {
 }
 
 .filled {
-    z-index: 2 !important;
+  z-index: 2 !important;
+}
+
+.hidden {
+  display: none !important;
 }
 
 .main-wrapper {
@@ -17,7 +21,7 @@ body {
   justify-content: center;
 }
 
-.game-board {
+.game-screen {
   position: relative;
 
   width: 632px;
@@ -31,22 +35,22 @@ body {
   gap: 4px 16px;
 }
 
-.game-board__front {
+.game-screen-board__front {
   position: absolute;
   z-index: 10;
 }
 
-.game-board__back {
-  position: absolute;
-  z-index: -1;
-}
-
-.game-cell {
+.game-screen-board__cell {
   height: 72px;
   width: 72px;
   z-index: 20;
 }
 
+.game-screen-board__back {
+  position: absolute;
+  z-index: -1;
+}
+
 .game-cell__counter {
-    z-index: 1;
+  z-index: 1;
 }
