@@ -26,6 +26,7 @@ let gameBoard = [
 
 console.log(gameBoard);
 
+// Menu buttons
 $gameMenuButtons.forEach(function ($gameMenuButton) {
   $gameMenuButton.addEventListener("click", function () {
     if (this === $gameMenuButtons[0]) {
@@ -33,6 +34,7 @@ $gameMenuButtons.forEach(function ($gameMenuButton) {
       $gameScreen.classList.remove("hidden");
       document;
       $backgroundColorTurnIndicator.classList.add("game-on");
+      $backgroundColorTurnIndicator.classList.add("red-turn");
     } else {
       $gameMenu.classList.add("hidden");
       $gameRules.classList.remove("hidden");
@@ -41,6 +43,7 @@ $gameMenuButtons.forEach(function ($gameMenuButton) {
   });
 });
 
+// Rules button
 $gameRulesButton.addEventListener("click", function () {
   $gameRules.classList.add("hidden");
   $gameMenu.classList.remove("hidden");
@@ -151,15 +154,21 @@ $gameScreenBoardCells.forEach(function ($gameScreenBoardCell) {
       const isWin = checkWin(gameBoard);
       if (isWin) {
         console.log(`Le joueur ${currentPlayer} a gagné !`);
+        return;
       }
       currentPlayer = "y";
+      $backgroundColorTurnIndicator.classList.remove("red-turn");
+      $backgroundColorTurnIndicator.classList.add("yellow-turn");
     } else {
       counterDrop(yellowCounterImage);
       const isWin = checkWin(gameBoard);
       if (isWin) {
         console.log(`Le joueur ${currentPlayer} a gagné !`);
+        return;
       }
       currentPlayer = "r";
+      $backgroundColorTurnIndicator.classList.remove("yellow-turn");
+      $backgroundColorTurnIndicator.classList.add("red-turn");
       console.log(gameBoard);
     }
   });

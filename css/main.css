@@ -31,6 +31,14 @@ body {
   border-radius: 60px;
 }
 
+.red-turn {
+  background-color: var(--red) !important;
+}
+
+.yellow-turn {
+  background-color: var(--yellow) !important;
+}
+
 .main-wrapper {
   min-height: 100vh;
   display: flex;
