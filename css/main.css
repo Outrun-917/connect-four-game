@@ -9,6 +9,8 @@
   --font-family: "Space Grotesk", serif;
 }
 
+html{user-select: none;}
+
 body {
   min-height: 100vh;
   display: flex;
