@@ -34,7 +34,6 @@ $gameMenuButtons.forEach(function ($gameMenuButton) {
       $gameScreen.classList.remove("hidden");
       document;
       $backgroundColorTurnIndicator.classList.add("game-on");
-      $backgroundColorTurnIndicator.classList.add("red-turn");
     } else {
       $gameMenu.classList.add("hidden");
       $gameRules.classList.remove("hidden");
@@ -154,21 +153,19 @@ $gameScreenBoardCells.forEach(function ($gameScreenBoardCell) {
       const isWin = checkWin(gameBoard);
       if (isWin) {
         console.log(`Le joueur ${currentPlayer} a gagné !`);
+        $backgroundColorTurnIndicator.classList.add("red-turn");
         return;
       }
       currentPlayer = "y";
-      $backgroundColorTurnIndicator.classList.remove("red-turn");
-      $backgroundColorTurnIndicator.classList.add("yellow-turn");
     } else {
       counterDrop(yellowCounterImage);
       const isWin = checkWin(gameBoard);
       if (isWin) {
         console.log(`Le joueur ${currentPlayer} a gagné !`);
+        $backgroundColorTurnIndicator.classList.add("yellow-turn");
         return;
       }
       currentPlayer = "r";
-      $backgroundColorTurnIndicator.classList.remove("yellow-turn");
-      $backgroundColorTurnIndicator.classList.add("red-turn");
       console.log(gameBoard);
     }
   });
