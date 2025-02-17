@@ -1,6 +1,9 @@
 const $gameMenu = document.querySelector(".game-menu");
 const $gameScreen = document.querySelector(".game-screen");
 const $gameScreenButtons = document.querySelectorAll(".game-screen__button");
+const $gameScreenCurrentTurn = document.querySelector(
+  ".game-screen__current-turn"
+);
 const $inGameMenu = document.querySelector(".in-game-menu");
 const $inGameMenuButtons = document.querySelectorAll(".in-game-menu__button");
 const $gameRules = document.querySelector(".game-rules");
@@ -25,6 +28,15 @@ const $gameScreenCurrentTurnTime = document.querySelector(
   ".game-screen__current-turn-time"
 );
 
+const stop = $inGameMenuButtons[2];
+const pause = $gameScreenButtons[0];
+const go = $inGameMenuButtons[0];
+const start = [
+  $gameMenuButtons[0],
+  $inGameMenuButtons[1],
+  $gameScreenButtons[1],
+];
+
 const redCounterImage = `<img src="./assets/counter-red-large.svg" alt="" />`;
 const yellowCounterImage = `<img src="./assets/counter-yellow-large.svg" alt="" />`;
 
@@ -38,6 +50,9 @@ let gameBoard = [
   ["", "", "", "", "", "", ""],
 ];
 
+let timer;
+let sec = 30;
+
 console.log(gameBoard);
 
 // Menu buttons
@@ -47,7 +62,6 @@ $gameMenuButtons.forEach(function ($gameMenuButton) {
       $gameMenu.classList.add("hidden");
       $gameScreen.classList.remove("hidden");
       $backgroundColorTurnIndicator.classList.add("game-on");
-      turnTimer();
     } else {
       $gameMenu.classList.add("hidden");
       $gameRules.classList.remove("hidden");
@@ -68,9 +82,9 @@ $gameScreenButtons.forEach(function ($gameScreenButton) {
   $gameScreenButton.addEventListener("click", function () {
     if (this === $gameScreenButtons[0]) {
       $inGameMenu.classList.remove("hidden");
-      turnTimer(pause)
     } else {
       gameReset();
+      
     }
   });
 });
@@ -80,33 +94,70 @@ $inGameMenuButtons.forEach(function ($inGameMenuButton) {
   $inGameMenuButton.addEventListener("click", function () {
     if (this === $inGameMenuButtons[0]) {
       $inGameMenu.classList.add("hidden");
-      if (($gameScreenCurrentTurnTime.innerHTML === "0s")) {
-        turnTimer();
-      }
     } else if (this === $inGameMenuButtons[1]) {
       gameReset();
       $inGameMenu.classList.add("hidden");
+      $backgroundColorTurnIndicator.classList.remove("red-win", "yellow-win");
     } else {
       gameReset();
       $gameScreen.classList.add("hidden");
-      $backgroundColorTurnIndicator.classList.remove("game-on");
+      $backgroundColorTurnIndicator.classList.remove(
+        "game-on",
+        "red-win",
+        "yellow-win"
+      );
       $inGameMenu.classList.add("hidden");
       $gameMenu.classList.remove("hidden");
     }
   });
 });
 
+// Turn timer
 function turnTimer(pause) {
-  let sec = 30;
-  let timer = setInterval(function () {
-    $gameScreenCurrentTurnTime.innerHTML = sec + "s";
-    sec--;
-    if (sec < 0) {
-      clearInterval(timer);
-      $inGameMenu.classList.remove("hidden");
-    }
-  }, 1000);
+  if (timer && pause) {
+    clearInterval(timer);
+  } else {
+    timer = setInterval(function () {
+      $gameScreenCurrentTurnTime.innerHTML = sec + "s";
+      console.log(sec);
+      sec--;
+      if (sec < 0) {
+        clearInterval(timer);
+        $inGameMenu.classList.remove("hidden");
+        console.log("C'est fini");
+      }
+    }, 1000);
+  }
 }
+
+stop.addEventListener("click", function () {
+  turnTimer(true);
+  clearInterval(timer);
+  sec = 30;
+  $gameScreenCurrentTurnTime.innerHTML = "30s";
+});
+
+pause.addEventListener("click", function () {
+  turnTimer(true);
+});
+
+go.addEventListener("click", function () {
+  if ($gameScreenCurrentTurnTime.innerHTML === "0s") {
+    sec = 30;
+    clearInterval(timer);
+    turnTimer(false);
+  } else {
+    turnTimer(false);
+  }
+});
+
+start.forEach(function (e) {
+  e.addEventListener("click", function () {
+    sec = 30;
+    clearInterval(timer);
+    turnTimer(false);
+  });
+});
 
 // Game reset
 function gameReset() {
@@ -244,24 +295,38 @@ $gameScreenBoardCells.forEach(function ($gameScreenBoardCell) {
       if (checkWin(gameBoard)) {
         console.log(`Le joueur ${currentPlayer} a gagné !`);
         $backgroundColorTurnIndicator.classList.add("red-win");
+        turnTimer(true);
         return;
       }
       if (checkTie(gameBoard)) {
         console.log(`Egalité, personne n'a gagné !`);
+        turnTimer(true);
         return;
       }
+      sec = 30;
+      clearInterval(timer);
+      turnTimer(false);
+      $gameScreenCurrentTurn.classList.remove("red-turn");
+      $gameScreenCurrentTurn.classList.add("yellow-turn");
       currentPlayer = "y";
     } else {
       counterDrop(yellowCounterImage);
       if (checkWin(gameBoard)) {
         console.log(`Le joueur ${currentPlayer} a gagné !`);
         $backgroundColorTurnIndicator.classList.add("yellow-win");
+        turnTimer(true);
         return;
       }
       if (checkTie(gameBoard)) {
         console.log(`Egalité, personne n'a gagné !`);
+        turnTimer(true);
         return;
       }
+      sec = 30;
+      clearInterval(timer);
+      turnTimer(false);
+      $gameScreenCurrentTurn.classList.add("red-turn");
+      $gameScreenCurrentTurn.classList.remove("yellow-turn");
       currentPlayer = "r";
       console.log(gameBoard);
     }
