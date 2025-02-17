@@ -297,8 +297,16 @@ body {
   background-image: url(../assets/turn-background-red.svg);
 }
 
+.red-turn p {
+  color: var(--white);
+}
+
 .yellow-turn {
-background-image: url(../assets/turn-background-yellow.svg);
+  background-image: url(../assets/turn-background-yellow.svg);
+}
+
+.yellow-turn p {
+  color: var(--black);
 }
 
 .game-screen__current-turn-player {
@@ -311,6 +319,49 @@ background-image: url(../assets/turn-background-yellow.svg);
   font-size: 56px;
   line-height: 72px;
   color: var(--white);
+}
+
+.player-won {
+  position: absolute;
+  z-index: 25;
+  top: 540px;
+  left: 176px;
+  width: 284px;
+  height: 184px;
+  border-radius: 20px;
+  background-color: var(--white);
+  border: solid var(--black) 3px;
+  border-bottom: solid var(--black) 10px;
+  text-align: center;
+  padding: 16px;
+}
+
+.winning-player {
+  font-weight: 700;
+  color: var(--black);
+}
+
+.winning-state {
+  font-weight: 700;
+  font-size: 56px;
+  line-height: 72px;
+  color: var(--black);
+}
+
+.play-again-button {
+  width: 132px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: var(--dark-purple);
+  color: var(--white);
+  font-weight: 700;
+  border: none;
+  transition: 0.2s;
+}
+
+.play-again-button:hover {
+  cursor: pointer;
+  background-color: var(--red);
 }
 
 .game-rules {
