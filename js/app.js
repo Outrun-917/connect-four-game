@@ -1,5 +1,8 @@
 const $gameMenu = document.querySelector(".game-menu");
 const $gameScreen = document.querySelector(".game-screen");
+const $gameScreenButtons = document.querySelectorAll(".game-screen__button");
+const $inGameMenu = document.querySelector(".in-game-menu");
+const $inGameMenuButtons = document.querySelectorAll(".in-game-menu__button");
 const $gameRules = document.querySelector(".game-rules");
 const $gameMenuButtons = document.querySelectorAll(".game-menu-button");
 const $gameRulesButton = document.querySelector(".game-rules__button");
@@ -9,6 +12,17 @@ const $gameScreenBoardCells = document.querySelectorAll(
 
 const $backgroundColorTurnIndicator = document.querySelector(
   ".background-color-turn-indicator"
+);
+
+// Game handlers
+const $gameScreenPlayerWinsCounts = document.querySelectorAll(
+  ".game-screen__player-wins-count"
+);
+const $gameScreenCurrentTurnPlayer = document.querySelector(
+  ".game-screen__current-turn-player"
+);
+const $gameScreenCurrentTurnTime = document.querySelector(
+  ".game-screen__current-turn-time"
 );
 
 const redCounterImage = `<img src="./assets/counter-red-large.svg" alt="" />`;
@@ -32,8 +46,8 @@ $gameMenuButtons.forEach(function ($gameMenuButton) {
     if (this === $gameMenuButtons[0]) {
       $gameMenu.classList.add("hidden");
       $gameScreen.classList.remove("hidden");
-      document;
       $backgroundColorTurnIndicator.classList.add("game-on");
+      turnTimer();
     } else {
       $gameMenu.classList.add("hidden");
       $gameRules.classList.remove("hidden");
@@ -49,15 +63,81 @@ $gameRulesButton.addEventListener("click", function () {
   $backgroundColorTurnIndicator.classList.remove("hidden");
 });
 
-// Vérification de la victoire, à chaque tour, le tableau de jeu est scanné
-function checkWin(board) {
-  const rows = 6; // Nombre de lignes
-  const cols = 7; // Nombre de colonnes
+// In game buttons
+$gameScreenButtons.forEach(function ($gameScreenButton) {
+  $gameScreenButton.addEventListener("click", function () {
+    if (this === $gameScreenButtons[0]) {
+      $inGameMenu.classList.remove("hidden");
+      turnTimer(pause)
+    } else {
+      gameReset();
+    }
+  });
+});
 
-  // Vérifier les lignes (horizontal)
+// In game menu buttons
+$inGameMenuButtons.forEach(function ($inGameMenuButton) {
+  $inGameMenuButton.addEventListener("click", function () {
+    if (this === $inGameMenuButtons[0]) {
+      $inGameMenu.classList.add("hidden");
+      if (($gameScreenCurrentTurnTime.innerHTML === "0s")) {
+        turnTimer();
+      }
+    } else if (this === $inGameMenuButtons[1]) {
+      gameReset();
+      $inGameMenu.classList.add("hidden");
+    } else {
+      gameReset();
+      $gameScreen.classList.add("hidden");
+      $backgroundColorTurnIndicator.classList.remove("game-on");
+      $inGameMenu.classList.add("hidden");
+      $gameMenu.classList.remove("hidden");
+    }
+  });
+});
+
+function turnTimer(pause) {
+  let sec = 30;
+  let timer = setInterval(function () {
+    $gameScreenCurrentTurnTime.innerHTML = sec + "s";
+    sec--;
+    if (sec < 0) {
+      clearInterval(timer);
+      $inGameMenu.classList.remove("hidden");
+    }
+  }, 1000);
+}
+
+// Game reset
+function gameReset() {
+  gameBoard = [
+    ["", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", ""],
+  ];
+
+  $gameScreenBoardCells.forEach(function ($gameScreenBoardCell) {
+    $gameScreenBoardCell.innerHTML = "";
+    $gameScreenBoardCell.classList.remove("filled");
+  });
+
+  currentPlayer = "r";
+
+  console.log("Le jeu a été réinitialisé !");
+}
+
+// Win verification, game gets scanned at each turn
+function checkWin(board) {
+  const rows = 6; // Amount of rows
+  const cols = 7; // Amount of columns
+
+  // Verify the rows (horizontal)
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c <= cols - 4; c++) {
-      // cols -4 pour ne pas dépasser la grille
+      // cols -4 to not overflow the grid
       if (
         board[r][c] !== "" &&
         board[r][c] === board[r][c + 1] &&
@@ -69,10 +149,10 @@ function checkWin(board) {
     }
   }
 
-  // Vérifier les colonnes (vertical)
+  // Verify columns (vertical)
   for (let c = 0; c < cols; c++) {
     for (let r = 0; r <= rows - 4; r++) {
-      // rows -4 pour ne pas dépasser la grille
+      // rows -4 to not overflow the grid
       if (
         board[r][c] !== "" &&
         board[r][c] === board[r + 1][c] &&
@@ -84,7 +164,7 @@ function checkWin(board) {
     }
   }
 
-  // Vérifier les diagonales principales (\)
+  // Verify main diagonals (\)
   for (let r = 0; r <= rows - 4; r++) {
     for (let c = 0; c <= cols - 4; c++) {
       if (
@@ -98,7 +178,7 @@ function checkWin(board) {
     }
   }
 
-  // Vérifier les diagonales secondaires (/)
+  // Verify secondary diagonals (/)
   for (let r = 0; r <= rows - 4; r++) {
     for (let c = 3; c < cols; c++) {
       if (
@@ -113,6 +193,17 @@ function checkWin(board) {
   }
 
   return false;
+}
+
+function checkTie(board) {
+  for (let r = 0; r < 6; r++) {
+    for (let c = 0; c < 7; c++) {
+      if (board[r][c] === "") {
+        return false;
+      }
+    }
+  }
+  return true;
 }
 
 $gameScreenBoardCells.forEach(function ($gameScreenBoardCell) {
@@ -150,19 +241,25 @@ $gameScreenBoardCells.forEach(function ($gameScreenBoardCell) {
 
     if (currentPlayer === "r") {
       counterDrop(redCounterImage);
-      const isWin = checkWin(gameBoard);
-      if (isWin) {
+      if (checkWin(gameBoard)) {
         console.log(`Le joueur ${currentPlayer} a gagné !`);
-        $backgroundColorTurnIndicator.classList.add("red-turn");
+        $backgroundColorTurnIndicator.classList.add("red-win");
+        return;
+      }
+      if (checkTie(gameBoard)) {
+        console.log(`Egalité, personne n'a gagné !`);
         return;
       }
       currentPlayer = "y";
     } else {
       counterDrop(yellowCounterImage);
-      const isWin = checkWin(gameBoard);
-      if (isWin) {
+      if (checkWin(gameBoard)) {
         console.log(`Le joueur ${currentPlayer} a gagné !`);
-        $backgroundColorTurnIndicator.classList.add("yellow-turn");
+        $backgroundColorTurnIndicator.classList.add("yellow-win");
+        return;
+      }
+      if (checkTie(gameBoard)) {
+        console.log(`Egalité, personne n'a gagné !`);
         return;
       }
       currentPlayer = "r";

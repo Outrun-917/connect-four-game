@@ -34,6 +34,29 @@
         </button>
       </div>
       <div class="game-screen hidden">
+        <div class="game-screen__buttons">
+          <button class="game-screen__button">MENU</button>
+          <img class="game-screen__logo" src="./assets/logo.svg" alt="" />
+          <button class="game-screen__button">RESTART</button>
+        </div>
+        <div class="game-screen__player-wins player-one-wins">
+          <img
+            class="game-screen__player-wins-image"
+            src="./assets/player-one.svg"
+            alt=""
+          />
+          <p class="game-screen__player-wins-player">PLAYER 1</p>
+          <p class="game-screen__player-wins-count">0</p>
+        </div>
+        <div class="game-screen__player-wins player-two-wins">
+          <img
+            class="game-screen__player-wins-image"
+            src="./assets/player-two.svg"
+            alt=""
+          />
+          <p class="game-screen__player-wins-player">PLAYER 2</p>
+          <p class="game-screen__player-wins-count">0</p>
+        </div>
         <img
           class="game-screen-board__front"
           src="./assets/board-layer-white-large.svg"
@@ -88,6 +111,11 @@
         <div class="game-screen-board__cell" data-x="4" data-y="5"></div>
         <div class="game-screen-board__cell" data-x="5" data-y="5"></div>
         <div class="game-screen-board__cell" data-x="6" data-y="5"></div>
+
+        <div class="game-screen__current-turn red-turn">
+          <p class="game-screen__current-turn-player">PLAYER 1’S TURN</p>
+          <p class="game-screen__current-turn-time">30s</p>
+        </div>
       </div>
       <div class="game-rules hidden">
         <p class="game-rules__title">RULES</p>
@@ -164,6 +192,20 @@
         </button>
       </div>
     </main>
+    <div class="in-game-menu hidden">
+      <div class="in-game-menu__card">
+        <p class="in-game-menu__title">PAUSE</p>
+        <button class="in-game-menu__button in-game-menu__button__continue">
+          CONTINUE GAME
+        </button>
+        <button class="in-game-menu__button in-game-menu__button__restart">
+          RESTART
+        </button>
+        <button class="in-game-menu__button in-game-menu__button__quit">
+          QUIT GAME
+        </button>
+      </div>
+    </div>
     <div class="background-color-turn-indicator"></div>
     <script src="./js/app.js"></script>
   </body>
