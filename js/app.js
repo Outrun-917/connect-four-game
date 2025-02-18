@@ -44,6 +44,9 @@ const start = [
 const redCounterImage = `<img src="./assets/counter-red-large.svg" alt="" />`;
 const yellowCounterImage = `<img src="./assets/counter-yellow-large.svg" alt="" />`;
 
+const redWinCounterImage = false;
+const yellowWinCounterImage = false;
+
 let starterState = 0;
 let currentPlayer = "r";
 let gameBoard = [
@@ -266,7 +269,7 @@ function gameReset() {
 }
 
 // Win verification, game gets scanned at each turn
-function checkWin(board) {
+function checkWin(board, winCounter) {
   const rows = 6; // Amount of rows
   const cols = 7; // Amount of columns
 
@@ -280,6 +283,9 @@ function checkWin(board) {
         board[r][c] === board[r][c + 2] &&
         board[r][c] === board[r][c + 3]
       ) {
+        document.querySelector(
+          `.game-screen-board__cell[data-y="${r}"][data-x="${c}"]`
+        ).innerHTML = winCounter;
         return true;
       }
     }
@@ -377,7 +383,7 @@ $gameScreenBoardCells.forEach(function ($gameScreenBoardCell) {
 
     if (currentPlayer === "r") {
       counterDrop(redCounterImage);
-      if (checkWin(gameBoard)) {
+      if (checkWin(gameBoard, redWinCounterImage)) {
         console.log(`Le joueur ${currentPlayer} a gagné !`);
         $backgroundColorTurnIndicator.classList.add("red-win");
 
@@ -408,7 +414,7 @@ $gameScreenBoardCells.forEach(function ($gameScreenBoardCell) {
       currentPlayer = "y";
     } else {
       counterDrop(yellowCounterImage);
-      if (checkWin(gameBoard)) {
+      if (checkWin(gameBoard, yellowWinCounterImage)) {
         console.log(`Le joueur ${currentPlayer} a gagné !`);
         $backgroundColorTurnIndicator.classList.add("yellow-win");
 
