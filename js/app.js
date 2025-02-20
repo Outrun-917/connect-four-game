@@ -530,7 +530,6 @@ $gameScreenBoardCellsClick.forEach(function ($gameScreenBoardCell) {
       }
 
       if (gameBoard[0][dataX] !== "") {
-        console.log("=======")
         sec = 30;
         clearInterval(timer);
         turnTimer(false);
@@ -544,7 +543,6 @@ $gameScreenBoardCellsClick.forEach(function ($gameScreenBoardCell) {
         currentPlayer = "r";
         return;
       } else {
-        console.log("+++++++")
         sec = 30;
         clearInterval(timer);
         turnTimer(false);
