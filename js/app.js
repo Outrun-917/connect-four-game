@@ -260,6 +260,8 @@ $playAgainButton.addEventListener("click", function () {
     $cursorColor.classList.add("cursor-yellow");
     $cursorColor.classList.remove("cursor-red");
 
+    $gameScreenCurrentTurnPlayer.innerHTML = `PLAYER 2’S TURN`;
+
     gameReset();
     currentPlayer = "y";
     starterState = 1;
@@ -276,6 +278,8 @@ $playAgainButton.addEventListener("click", function () {
 
     $cursorColor.classList.remove("cursor-yellow");
     $cursorColor.classList.add("cursor-red");
+
+    $gameScreenCurrentTurnPlayer.innerHTML = `PLAYER 1’S TURN`;
 
     gameReset();
     currentPlayer = "r";
