@@ -192,6 +192,20 @@ body {
   left: 45%;
 }
 
+.game-screen-marker-wrapper {
+  position: absolute;
+  top: -36px;
+  left: 12px;
+  display: grid;
+  grid-template-columns: repeat(7, 72px);
+  gap: 16px;
+}
+
+.game-screen__marker {
+  display: flex;
+  justify-content: center;
+}
+
 .in-game-menu {
   position: absolute;
   top: 0;

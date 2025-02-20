@@ -19,7 +19,7 @@
   </head>
   <body>
     <main class="main-wrapper">
-      <div class="game-menu">
+      <div class="game-menu hidden">
         <img class="game-menu__logo" src="./assets/logo.svg" alt="" />
         <button class="game-menu-button game-menu-button__play-pvp">
           PLAY VS PLAYER
@@ -33,11 +33,62 @@
           GAME RULES
         </button>
       </div>
-      <div class="game-screen hidden">
+      <div class="game-screen">
         <div class="game-screen__buttons">
           <button class="game-screen__button">MENU</button>
           <img class="game-screen__logo" src="./assets/logo.svg" alt="" />
           <button class="game-screen__button">RESTART</button>
+        </div>
+        <div class="game-screen-marker-wrapper">
+          <div class="game-screen__marker" data-x="0">
+            <img
+              class="game-screen__marker-image"
+              src="./assets/marker-red.svg"
+              alt=""
+            />
+          </div>
+          <div class="game-screen__marker" data-x="1">
+            <img
+              class="game-screen__marker-image"
+              src="./assets/marker-red.svg"
+              alt=""
+            />
+          </div>
+          <div class="game-screen__marker" data-x="2">
+            <img
+              class="game-screen__marker-image"
+              src="./assets/marker-red.svg"
+              alt=""
+            />
+          </div>
+          <div class="game-screen__marker" data-x="3">
+            <img
+              class="game-screen__marker-image"
+              src="./assets/marker-red.svg"
+              alt=""
+            />
+          </div>
+          <div class="game-screen__marker" data-x="4">
+            <img
+              class="game-screen__marker-image"
+              src="./assets/marker-red.svg"
+              alt=""
+            />
+          </div>
+          <div class="game-screen__marker" data-x="5">
+            <img
+              class="game-screen__marker-image"
+              src="./assets/marker-red.svg"
+              alt=""
+            />
+          </div>
+          <div class="game-screen__marker" data-x="6">
+            <img
+              class="game-screen__marker-image"
+              src="./assets/marker-red.svg"
+              alt=""
+            />
+          </div>
         </div>
         <div class="game-screen__player-wins player-one-wins">
           <img
@@ -424,7 +475,7 @@
         </button>
       </div>
     </div>
-    <div class="background-color-turn-indicator"></div>
+    <div class="background-color-turn-indicator game-on"></div>
     <script src="./js/app.js"></script>
   </body>
 </html>

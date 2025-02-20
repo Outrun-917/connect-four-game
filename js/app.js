@@ -52,6 +52,10 @@ const yellowCounterImage = `<img src="./assets/counter-yellow-large.svg" alt="" 
 const redWinCounterImage = `<img src="./assets/counter-red-large-win.svg" alt="">`;
 const yellowWinCounterImage = `<img src="./assets/counter-yellow-large-win.svg" alt="">`;
 
+const markerRed = `<img class="game-screen__marker-image" src="./assets/marker-red.svg" alt="" />`;
+
+const markerYellow = `<img class="game-screen__marker-image" src="./assets/marker-yellow.svg" alt="" />`;
+
 let starterState = 0;
 let currentPlayer = "r";
 let gameBoard = [
@@ -167,6 +171,22 @@ $inGameMenuButtons.forEach(function ($inGameMenuButton) {
       currentPlayer = "r";
       starterState = 0;
     }
+  });
+});
+
+$gameScreenBoardCellsClick.forEach(function ($gameScreenBoardCell) {
+  const dataX = $gameScreenBoardCell.getAttribute("data-x");
+  const $marker = document.querySelector(
+    `.game-screen__marker[data-x="${dataX}"]`
+  );
+
+  if (currentPlayer === "r") {
+    $marker.innerHTML = markerRed;
+  } else {
+    $marker.innerHTML = markerYellow;
+  }
+  $gameScreenBoardCell.addEventListener("mouseover", function () {
+    $marker.classList.add("hidden")
   });
 });
 
