@@ -22,10 +22,6 @@ body {
   font-family: var(--font-family);
 }
 
-.filled {
-  z-index: 2 !important;
-}
-
 .hidden {
   display: none !important;
 }
@@ -132,10 +128,29 @@ body {
   z-index: 10;
 }
 
-.game-screen-board__cell {
+.game-screen-board__cell-click {
   height: 72px;
   width: 72px;
   z-index: 20;
+}
+
+.game-screen-board__cell-image {
+  height: 72px;
+  width: 72px;
+  z-index: 2;
+}
+
+.game-screen-board__cell-image-wrapper {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+
+  padding: 16px;
+  padding-bottom: 40px;
+
+  display: grid;
+  grid-template-columns: repeat(7, 72px);
+  gap: 4px 16px;
 }
 
 .game-screen-board__back {

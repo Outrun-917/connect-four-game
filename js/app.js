@@ -9,8 +9,13 @@ const $inGameMenuButtons = document.querySelectorAll(".in-game-menu__button");
 const $gameRules = document.querySelector(".game-rules");
 const $gameMenuButtons = document.querySelectorAll(".game-menu-button");
 const $gameRulesButton = document.querySelector(".game-rules__button");
-const $gameScreenBoardCells = document.querySelectorAll(
-  ".game-screen-board__cell"
+
+// Game Cells
+const $gameScreenBoardCellsClick = document.querySelectorAll(
+  ".game-screen-board__cell-click"
+);
+const $gameScreenBoardCellsImage = document.querySelectorAll(
+  ".game-screen-board__cell-image"
 );
 
 const $backgroundColorTurnIndicator = document.querySelector(
@@ -44,8 +49,8 @@ const start = [
 const redCounterImage = `<img src="./assets/counter-red-large.svg" alt="" />`;
 const yellowCounterImage = `<img src="./assets/counter-yellow-large.svg" alt="" />`;
 
-const redWinCounterImage = false;
-const yellowWinCounterImage = false;
+const redWinCounterImage = `<img src="./assets/counter-red-large-win.svg" alt="">`;
+const yellowWinCounterImage = `<img src="./assets/counter-yellow-large-win.svg" alt="">`;
 
 let starterState = 0;
 let currentPlayer = "r";
@@ -63,8 +68,6 @@ let playerTwoWin = 0;
 
 let timer;
 let sec = 30;
-
-console.log(gameBoard);
 
 // Menu buttons
 $gameMenuButtons.forEach(function ($gameMenuButton) {
@@ -169,17 +172,16 @@ $inGameMenuButtons.forEach(function ($inGameMenuButton) {
 
 // Turn timer
 function turnTimer(pause) {
+  return;
   if (timer && pause) {
     clearInterval(timer);
   } else {
     timer = setInterval(function () {
       $gameScreenCurrentTurnTime.innerHTML = sec + "s";
-      console.log(sec);
       sec--;
       if (sec < 0) {
         clearInterval(timer);
         $inGameMenu.classList.remove("hidden");
-        console.log("C'est fini");
       }
     }, 1000);
   }
@@ -258,14 +260,11 @@ function gameReset() {
     ["", "", "", "", "", "", ""],
   ];
 
-  $gameScreenBoardCells.forEach(function ($gameScreenBoardCell) {
+  $gameScreenBoardCellsImage.forEach(function ($gameScreenBoardCell) {
     $gameScreenBoardCell.innerHTML = "";
-    $gameScreenBoardCell.classList.remove("filled");
   });
 
   currentPlayer = "r";
-
-  console.log("Le jeu a été réinitialisé !");
 }
 
 // Win verification, game gets scanned at each turn
@@ -284,7 +283,16 @@ function checkWin(board, winCounter) {
         board[r][c] === board[r][c + 3]
       ) {
         document.querySelector(
-          `.game-screen-board__cell[data-y="${r}"][data-x="${c}"]`
+          `.game-screen-board__cell-image[data-y="${r}"][data-x="${c}"]`
+        ).innerHTML = winCounter;
+        document.querySelector(
+          `.game-screen-board__cell-image[data-y="${r}"][data-x="${c + 1}"]`
+        ).innerHTML = winCounter;
+        document.querySelector(
+          `.game-screen-board__cell-image[data-y="${r}"][data-x="${c + 2}"]`
+        ).innerHTML = winCounter;
+        document.querySelector(
+          `.game-screen-board__cell-image[data-y="${r}"][data-x="${c + 3}"]`
         ).innerHTML = winCounter;
         return true;
       }
@@ -301,12 +309,24 @@ function checkWin(board, winCounter) {
         board[r][c] === board[r + 2][c] &&
         board[r][c] === board[r + 3][c]
       ) {
+        document.querySelector(
+          `.game-screen-board__cell-image[data-y="${r}"][data-x="${c}"]`
+        ).innerHTML = winCounter;
+        document.querySelector(
+          `.game-screen-board__cell-image[data-y="${r + 1}"][data-x="${c}"]`
+        ).innerHTML = winCounter;
+        document.querySelector(
+          `.game-screen-board__cell-image[data-y="${r + 2}"][data-x="${c}"]`
+        ).innerHTML = winCounter;
+        document.querySelector(
+          `.game-screen-board__cell-image[data-y="${r + 3}"][data-x="${c}"]`
+        ).innerHTML = winCounter;
         return true;
       }
     }
   }
 
-  // Verify main diagonals (\)
+  // Verify main diagonal
   for (let r = 0; r <= rows - 4; r++) {
     for (let c = 0; c <= cols - 4; c++) {
       if (
@@ -315,12 +335,24 @@ function checkWin(board, winCounter) {
         board[r][c] === board[r + 2][c + 2] &&
         board[r][c] === board[r + 3][c + 3]
       ) {
+        document.querySelector(
+          `.game-screen-board__cell-image[data-y="${r}"][data-x="${c}"]`
+        ).innerHTML = winCounter;
+        document.querySelector(
+          `.game-screen-board__cell-image[data-y="${r + 1}"][data-x="${c + 1}"]`
+        ).innerHTML = winCounter;
+        document.querySelector(
+          `.game-screen-board__cell-image[data-y="${r + 2}"][data-x="${c + 2}"]`
+        ).innerHTML = winCounter;
+        document.querySelector(
+          `.game-screen-board__cell-image[data-y="${r + 3}"][data-x="${c + 3}"]`
+        ).innerHTML = winCounter;
         return true;
       }
     }
   }
 
-  // Verify secondary diagonals (/)
+  // Verify secondary diagonals
   for (let r = 0; r <= rows - 4; r++) {
     for (let c = 3; c < cols; c++) {
       if (
@@ -329,11 +361,22 @@ function checkWin(board, winCounter) {
         board[r][c] === board[r + 2][c - 2] &&
         board[r][c] === board[r + 3][c - 3]
       ) {
+        document.querySelector(
+          `.game-screen-board__cell-image[data-y="${r}"][data-x="${c}"]`
+        ).innerHTML = winCounter;
+        document.querySelector(
+          `.game-screen-board__cell-image[data-y="${r + 1}"][data-x="${c - 1}"]`
+        ).innerHTML = winCounter;
+        document.querySelector(
+          `.game-screen-board__cell-image[data-y="${r + 2}"][data-x="${c - 2}"]`
+        ).innerHTML = winCounter;
+        document.querySelector(
+          `.game-screen-board__cell-image[data-y="${r + 3}"][data-x="${c - 3}"]`
+        ).innerHTML = winCounter;
         return true;
       }
     }
   }
-
   return false;
 }
 
@@ -348,43 +391,34 @@ function checkTie(board) {
   return true;
 }
 
-$gameScreenBoardCells.forEach(function ($gameScreenBoardCell) {
+$gameScreenBoardCellsImage.forEach(function ($gameScreenBoardCell) {
   $gameScreenBoardCell.innerHTML = "";
-  $gameScreenBoardCell.classList.remove("filled");
 });
 
 // event listener for gameCell click event
-$gameScreenBoardCells.forEach(function ($gameScreenBoardCell) {
+$gameScreenBoardCellsClick.forEach(function ($gameScreenBoardCell) {
   $gameScreenBoardCell.addEventListener("click", function () {
     const dataX = $gameScreenBoardCell.getAttribute("data-x");
 
+    // Counter drop handler
     function counterDrop(playerCounter) {
       for (let i = 5; i >= 0; i--) {
         if (gameBoard[i][dataX] === "") {
-          console.log("C'est vide");
           gameBoard[i][dataX] = currentPlayer;
 
           document.querySelector(
-            `.game-screen-board__cell[data-y="${i}"][data-x="${dataX}"]`
+            `.game-screen-board__cell-image[data-y="${i}"][data-x="${dataX}"]`
           ).innerHTML = playerCounter;
 
-          document
-            .querySelector(
-              `.game-screen-board__cell[data-y="${i}"][data-x="${dataX}"]`
-            )
-            .classList.add("filled");
-
           break;
-        } else {
-          console.log("C'est pas vide");
         }
       }
     }
 
+    // Main game handler
     if (currentPlayer === "r") {
       counterDrop(redCounterImage);
       if (checkWin(gameBoard, redWinCounterImage)) {
-        console.log(`Le joueur ${currentPlayer} a gagné !`);
         $backgroundColorTurnIndicator.classList.add("red-win");
 
         $playerWon.classList.remove("hidden");
@@ -397,25 +431,27 @@ $gameScreenBoardCells.forEach(function ($gameScreenBoardCell) {
         return;
       }
       if (checkTie(gameBoard)) {
-        console.log(`Egalité, personne n'a gagné !`);
-
         $playerWon.classList.remove("hidden");
         $winningPlayer.innerHTML = "NO ONE";
 
         turnTimer(true);
         return;
       }
-      sec = 30;
-      clearInterval(timer);
-      turnTimer(false);
-      $gameScreenCurrentTurn.classList.remove("red-turn");
-      $gameScreenCurrentTurn.classList.add("yellow-turn");
-      $gameScreenCurrentTurnPlayer.innerHTML = `PLAYER 2’S TURN`;
-      currentPlayer = "y";
+
+      if (gameBoard[0][dataX] !== "") {
+        return;
+      } else {
+        sec = 30;
+        clearInterval(timer);
+        turnTimer(false);
+        $gameScreenCurrentTurn.classList.remove("red-turn");
+        $gameScreenCurrentTurn.classList.add("yellow-turn");
+        $gameScreenCurrentTurnPlayer.innerHTML = `PLAYER 2’S TURN`;
+        currentPlayer = "y";
+      }
     } else {
       counterDrop(yellowCounterImage);
       if (checkWin(gameBoard, yellowWinCounterImage)) {
-        console.log(`Le joueur ${currentPlayer} a gagné !`);
         $backgroundColorTurnIndicator.classList.add("yellow-win");
 
         $playerWon.classList.remove("hidden");
@@ -428,22 +464,24 @@ $gameScreenBoardCells.forEach(function ($gameScreenBoardCell) {
         return;
       }
       if (checkTie(gameBoard)) {
-        console.log(`Egalité, personne n'a gagné !`);
-
         $playerWon.classList.remove("hidden");
         $winningPlayer.innerHTML = "NO ONE";
 
         turnTimer(true);
         return;
       }
-      sec = 30;
-      clearInterval(timer);
-      turnTimer(false);
-      $gameScreenCurrentTurn.classList.add("red-turn");
-      $gameScreenCurrentTurn.classList.remove("yellow-turn");
-      $gameScreenCurrentTurnPlayer.innerHTML = `PLAYER 1’S TURN`;
-      currentPlayer = "r";
-      console.log(gameBoard);
+
+      if (gameBoard[0][dataX]) {
+        return;
+      } else {
+        sec = 30;
+        clearInterval(timer);
+        turnTimer(false);
+        $gameScreenCurrentTurn.classList.add("red-turn");
+        $gameScreenCurrentTurn.classList.remove("yellow-turn");
+        $gameScreenCurrentTurnPlayer.innerHTML = `PLAYER 1’S TURN`;
+        currentPlayer = "r";
+      }
     }
   });
 });
