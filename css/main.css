@@ -192,18 +192,21 @@ body {
   left: 45%;
 }
 
-.game-screen-marker-wrapper {
+.cursor {
   position: absolute;
   top: -36px;
-  left: 12px;
-  display: grid;
-  grid-template-columns: repeat(7, 72px);
-  gap: 16px;
+  left: 296px;
+  height: 36px;
+  width: 38px;
+  transition: 0.2s;
 }
 
-.game-screen__marker {
-  display: flex;
-  justify-content: center;
+.cursor-red {
+  fill: #FD6687 !important;
+}
+
+.cursor-yellow {
+  fill: #FFCE67 !important;
 }
 
 .in-game-menu {

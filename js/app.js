@@ -37,6 +37,9 @@ const $playerWon = document.querySelector(".player-won");
 const $winningPlayer = document.querySelector(".winning-player");
 const $playAgainButton = document.querySelector(".play-again-button");
 
+const $cursor = document.querySelector(".cursor");
+const $cursorColor = document.querySelector(".cursor-color");
+
 const stop = $inGameMenuButtons[2];
 const pause = $gameScreenButtons[0];
 const go = $inGameMenuButtons[0];
@@ -52,10 +55,6 @@ const yellowCounterImage = `<img src="./assets/counter-yellow-large.svg" alt="" 
 const redWinCounterImage = `<img src="./assets/counter-red-large-win.svg" alt="">`;
 const yellowWinCounterImage = `<img src="./assets/counter-yellow-large-win.svg" alt="">`;
 
-const markerRed = `<img class="game-screen__marker-image" src="./assets/marker-red.svg" alt="" />`;
-
-const markerYellow = `<img class="game-screen__marker-image" src="./assets/marker-yellow.svg" alt="" />`;
-
 let starterState = 0;
 let currentPlayer = "r";
 let gameBoard = [
@@ -67,6 +66,7 @@ let gameBoard = [
   ["", "", "", "", "", "", ""],
 ];
 
+let winState = false;
 let playerOneWin = 0;
 let playerTwoWin = 0;
 
@@ -87,11 +87,16 @@ $gameMenuButtons.forEach(function ($gameMenuButton) {
       $gameScreenCurrentTurn.classList.remove("yellow-turn");
       $gameScreenCurrentTurn.classList.add("red-turn");
 
+      $cursorColor.classList.remove("cursor-yellow");
+      $cursorColor.classList.add("cursor-red");
+
       playerOneWin = 0;
       playerTwoWin = 0;
 
       $gameScreenPlayerWinsCounts[0].innerHTML = "0";
       $gameScreenPlayerWinsCounts[1].innerHTML = "0";
+
+      winState = false;
     } else {
       $gameMenu.classList.add("hidden");
       $gameRules.classList.remove("hidden");
@@ -120,6 +125,9 @@ $gameScreenButtons.forEach(function ($gameScreenButton) {
       $playerWon.classList.add("hidden");
       $gameScreenCurrentTurn.classList.remove("hidden");
 
+      $cursorColor.classList.remove("cursor-yellow");
+      $cursorColor.classList.add("cursor-red");
+
       gameReset();
       currentPlayer = "r";
       starterState = 0;
@@ -129,6 +137,8 @@ $gameScreenButtons.forEach(function ($gameScreenButton) {
 
       $gameScreenPlayerWinsCounts[0].innerHTML = "0";
       $gameScreenPlayerWinsCounts[1].innerHTML = "0";
+
+      winState = false;
     }
   });
 });
@@ -146,6 +156,9 @@ $inGameMenuButtons.forEach(function ($inGameMenuButton) {
       $playerWon.classList.add("hidden");
       $gameScreenCurrentTurn.classList.remove("hidden");
 
+      $cursorColor.classList.remove("cursor-yellow");
+      $cursorColor.classList.add("cursor-red");
+
       currentPlayer = "r";
       starterState = 0;
 
@@ -154,6 +167,8 @@ $inGameMenuButtons.forEach(function ($inGameMenuButton) {
 
       $gameScreenPlayerWinsCounts[0].innerHTML = "0";
       $gameScreenPlayerWinsCounts[1].innerHTML = "0";
+
+      winState = false;
     } else {
       gameReset();
       $gameScreen.classList.add("hidden");
@@ -174,25 +189,19 @@ $inGameMenuButtons.forEach(function ($inGameMenuButton) {
   });
 });
 
-$gameScreenBoardCellsClick.forEach(function ($gameScreenBoardCell) {
-  const dataX = $gameScreenBoardCell.getAttribute("data-x");
-  const $marker = document.querySelector(
-    `.game-screen__marker[data-x="${dataX}"]`
-  );
+// Cursor handler
+$gameScreenBoardCellsClick.forEach(function (cell) {
+  cell.addEventListener("mouseover", function (e) {
+    const pos = e.target.getBoundingClientRect();
+    const gridPos = $gameScreen.getBoundingClientRect();
 
-  if (currentPlayer === "r") {
-    $marker.innerHTML = markerRed;
-  } else {
-    $marker.innerHTML = markerYellow;
-  }
-  $gameScreenBoardCell.addEventListener("mouseover", function () {
-    $marker.classList.add("hidden")
+    const newPosX = pos.x + 16 - gridPos.x;
+    $cursor.style.left = newPosX + "px";
   });
 });
 
 // Turn timer
 function turnTimer(pause) {
-  return;
   if (timer && pause) {
     clearInterval(timer);
   } else {
@@ -248,9 +257,13 @@ $playAgainButton.addEventListener("click", function () {
     $gameScreenCurrentTurn.classList.remove("red-turn");
     $gameScreenCurrentTurn.classList.add("yellow-turn");
 
+    $cursorColor.classList.add("cursor-yellow");
+    $cursorColor.classList.remove("cursor-red");
+
     gameReset();
     currentPlayer = "y";
     starterState = 1;
+    winState = false;
   } else {
     sec = 30;
     clearInterval(timer);
@@ -261,9 +274,13 @@ $playAgainButton.addEventListener("click", function () {
     $gameScreenCurrentTurn.classList.add("red-turn");
     $gameScreenCurrentTurn.classList.remove("yellow-turn");
 
+    $cursorColor.classList.remove("cursor-yellow");
+    $cursorColor.classList.add("cursor-red");
+
     gameReset();
     currentPlayer = "r";
     starterState = 0;
+    winState = false;
   }
   $playerWon.classList.add("hidden");
   $gameScreenCurrentTurn.classList.remove("hidden");
@@ -444,8 +461,11 @@ $gameScreenBoardCellsClick.forEach(function ($gameScreenBoardCell) {
         $playerWon.classList.remove("hidden");
         $winningPlayer.innerHTML = "PLAYER 1";
 
-        playerOneWin++;
-        $gameScreenPlayerWinsCounts[0].innerHTML = playerOneWin;
+        if (winState === false) {
+          playerOneWin++;
+          $gameScreenPlayerWinsCounts[0].innerHTML = playerOneWin;
+          winState = true;
+        }
 
         turnTimer(true);
         return;
@@ -459,6 +479,17 @@ $gameScreenBoardCellsClick.forEach(function ($gameScreenBoardCell) {
       }
 
       if (gameBoard[0][dataX] !== "") {
+        sec = 30;
+        clearInterval(timer);
+        turnTimer(false);
+        $gameScreenCurrentTurn.classList.remove("red-turn");
+        $gameScreenCurrentTurn.classList.add("yellow-turn");
+        $gameScreenCurrentTurnPlayer.innerHTML = `PLAYER 2’S TURN`;
+
+        $cursorColor.classList.add("cursor-yellow");
+        $cursorColor.classList.remove("cursor-red");
+
+        currentPlayer = "y";
         return;
       } else {
         sec = 30;
@@ -467,6 +498,10 @@ $gameScreenBoardCellsClick.forEach(function ($gameScreenBoardCell) {
         $gameScreenCurrentTurn.classList.remove("red-turn");
         $gameScreenCurrentTurn.classList.add("yellow-turn");
         $gameScreenCurrentTurnPlayer.innerHTML = `PLAYER 2’S TURN`;
+
+        $cursorColor.classList.add("cursor-yellow");
+        $cursorColor.classList.remove("cursor-red");
+
         currentPlayer = "y";
       }
     } else {
@@ -477,8 +512,11 @@ $gameScreenBoardCellsClick.forEach(function ($gameScreenBoardCell) {
         $playerWon.classList.remove("hidden");
         $winningPlayer.innerHTML = "PLAYER 2";
 
-        playerTwoWin++;
-        $gameScreenPlayerWinsCounts[1].innerHTML = playerTwoWin;
+        if (winState === false) {
+          playerTwoWin++;
+          $gameScreenPlayerWinsCounts[1].innerHTML = playerTwoWin;
+          winState = true;
+        }
 
         turnTimer(true);
         return;
@@ -491,15 +529,32 @@ $gameScreenBoardCellsClick.forEach(function ($gameScreenBoardCell) {
         return;
       }
 
-      if (gameBoard[0][dataX]) {
-        return;
-      } else {
+      if (gameBoard[0][dataX] !== "") {
+        console.log("=======")
         sec = 30;
         clearInterval(timer);
         turnTimer(false);
         $gameScreenCurrentTurn.classList.add("red-turn");
         $gameScreenCurrentTurn.classList.remove("yellow-turn");
         $gameScreenCurrentTurnPlayer.innerHTML = `PLAYER 1’S TURN`;
+
+        $cursorColor.classList.remove("cursor-yellow");
+        $cursorColor.classList.add("cursor-red");
+
+        currentPlayer = "r";
+        return;
+      } else {
+        console.log("+++++++")
+        sec = 30;
+        clearInterval(timer);
+        turnTimer(false);
+        $gameScreenCurrentTurn.classList.add("red-turn");
+        $gameScreenCurrentTurn.classList.remove("yellow-turn");
+        $gameScreenCurrentTurnPlayer.innerHTML = `PLAYER 1’S TURN`;
+
+        $cursorColor.classList.remove("cursor-yellow");
+        $cursorColor.classList.add("cursor-red");
+
         currentPlayer = "r";
       }
     }
