@@ -440,124 +440,131 @@ $gameScreenBoardCellsImage.forEach(function ($gameScreenBoardCell) {
 $gameScreenBoardCellsClick.forEach(function ($gameScreenBoardCell) {
   $gameScreenBoardCell.addEventListener("click", function () {
     const dataX = $gameScreenBoardCell.getAttribute("data-x");
-
-    // Counter drop handler
-    function counterDrop(playerCounter) {
-      for (let i = 5; i >= 0; i--) {
-        if (gameBoard[i][dataX] === "") {
-          gameBoard[i][dataX] = currentPlayer;
-
-          document.querySelector(
-            `.game-screen-board__cell-image[data-y="${i}"][data-x="${dataX}"]`
-          ).innerHTML = playerCounter;
-
-          break;
-        }
-      }
-    }
-
-    // Main game handler
-    if (currentPlayer === "r") {
-      counterDrop(redCounterImage);
-      if (checkWin(gameBoard, redWinCounterImage)) {
-        $backgroundColorTurnIndicator.classList.add("red-win");
-
-        $playerWon.classList.remove("hidden");
-        $winningPlayer.innerHTML = "PLAYER 1";
-
-        if (winState === false) {
-          playerOneWin++;
-          $gameScreenPlayerWinsCounts[0].innerHTML = playerOneWin;
-          winState = true;
-        }
-
-        turnTimer(true);
-        return;
-      }
-      if (checkTie(gameBoard)) {
-        $playerWon.classList.remove("hidden");
-        $winningPlayer.innerHTML = "NO ONE";
-
-        turnTimer(true);
-        return;
-      }
-
-      if (gameBoard[0][dataX] !== "") {
-        sec = 30;
-        clearInterval(timer);
-        turnTimer(false);
-        $gameScreenCurrentTurn.classList.remove("red-turn");
-        $gameScreenCurrentTurn.classList.add("yellow-turn");
-        $gameScreenCurrentTurnPlayer.innerHTML = `PLAYER 2’S TURN`;
-
-        $cursorColor.classList.add("cursor-yellow");
-        $cursorColor.classList.remove("cursor-red");
-
-        currentPlayer = "y";
-        return;
-      } else {
-        sec = 30;
-        clearInterval(timer);
-        turnTimer(false);
-        $gameScreenCurrentTurn.classList.remove("red-turn");
-        $gameScreenCurrentTurn.classList.add("yellow-turn");
-        $gameScreenCurrentTurnPlayer.innerHTML = `PLAYER 2’S TURN`;
-
-        $cursorColor.classList.add("cursor-yellow");
-        $cursorColor.classList.remove("cursor-red");
-
-        currentPlayer = "y";
-      }
+    if (winState === true) {
+      return;
     } else {
-      counterDrop(yellowCounterImage);
-      if (checkWin(gameBoard, yellowWinCounterImage)) {
-        $backgroundColorTurnIndicator.classList.add("yellow-win");
-
-        $playerWon.classList.remove("hidden");
-        $winningPlayer.innerHTML = "PLAYER 2";
-
-        if (winState === false) {
-          playerTwoWin++;
-          $gameScreenPlayerWinsCounts[1].innerHTML = playerTwoWin;
-          winState = true;
-        }
-
-        turnTimer(true);
-        return;
-      }
-      if (checkTie(gameBoard)) {
-        $playerWon.classList.remove("hidden");
-        $winningPlayer.innerHTML = "NO ONE";
-
-        turnTimer(true);
-        return;
-      }
-
       if (gameBoard[0][dataX] !== "") {
-        sec = 30;
-        clearInterval(timer);
-        turnTimer(false);
-        $gameScreenCurrentTurn.classList.add("red-turn");
-        $gameScreenCurrentTurn.classList.remove("yellow-turn");
-        $gameScreenCurrentTurnPlayer.innerHTML = `PLAYER 1’S TURN`;
-
-        $cursorColor.classList.remove("cursor-yellow");
-        $cursorColor.classList.add("cursor-red");
-
-        currentPlayer = "r";
         return;
       } else {
-        sec = 30;
-        clearInterval(timer);
-        turnTimer(false);
-        $gameScreenCurrentTurn.classList.add("red-turn");
-        $gameScreenCurrentTurn.classList.remove("yellow-turn");
-        $gameScreenCurrentTurnPlayer.innerHTML = `PLAYER 1’S TURN`;
+        // Counter drop handler
+        function counterDrop(playerCounter) {
+          for (let i = 5; i >= 0; i--) {
+            if (gameBoard[i][dataX] === "") {
+              gameBoard[i][dataX] = currentPlayer;
 
-        $cursorColor.classList.remove("cursor-yellow");
-        $cursorColor.classList.add("cursor-red");
+              document.querySelector(
+                `.game-screen-board__cell-image[data-y="${i}"][data-x="${dataX}"]`
+              ).innerHTML = playerCounter;
 
-        currentPlayer = "r";
+              break;
+            }
+          }
+        }
+
+        // Main game handler
+        if (currentPlayer === "r") {
+          counterDrop(redCounterImage);
+          if (checkWin(gameBoard, redWinCounterImage)) {
+            $backgroundColorTurnIndicator.classList.add("red-win");
+
+            $playerWon.classList.remove("hidden");
+            $winningPlayer.innerHTML = "PLAYER 1";
+
+            if (winState === false) {
+              playerOneWin++;
+              $gameScreenPlayerWinsCounts[0].innerHTML = playerOneWin;
+              winState = true;
+            }
+
+            turnTimer(true);
+            return;
+          }
+          if (checkTie(gameBoard)) {
+            $playerWon.classList.remove("hidden");
+            $winningPlayer.innerHTML = "NO ONE";
+
+            turnTimer(true);
+            return;
+          }
+
+          if (gameBoard[0][dataX] !== "") {
+            sec = 30;
+            clearInterval(timer);
+            turnTimer(false);
+            $gameScreenCurrentTurn.classList.remove("red-turn");
+            $gameScreenCurrentTurn.classList.add("yellow-turn");
+            $gameScreenCurrentTurnPlayer.innerHTML = `PLAYER 2’S TURN`;
+
+            $cursorColor.classList.add("cursor-yellow");
+            $cursorColor.classList.remove("cursor-red");
+
+            currentPlayer = "y";
+            return;
+          } else {
+            sec = 30;
+            clearInterval(timer);
+            turnTimer(false);
+            $gameScreenCurrentTurn.classList.remove("red-turn");
+            $gameScreenCurrentTurn.classList.add("yellow-turn");
+            $gameScreenCurrentTurnPlayer.innerHTML = `PLAYER 2’S TURN`;
+
+            $cursorColor.classList.add("cursor-yellow");
+            $cursorColor.classList.remove("cursor-red");
+
+            currentPlayer = "y";
+          }
+        } else {
+          counterDrop(yellowCounterImage);
+          if (checkWin(gameBoard, yellowWinCounterImage)) {
+            $backgroundColorTurnIndicator.classList.add("yellow-win");
+
+            $playerWon.classList.remove("hidden");
+            $winningPlayer.innerHTML = "PLAYER 2";
+
+            if (winState === false) {
+              playerTwoWin++;
+              $gameScreenPlayerWinsCounts[1].innerHTML = playerTwoWin;
+              winState = true;
+            }
+
+            turnTimer(true);
+            return;
+          }
+          if (checkTie(gameBoard)) {
+            $playerWon.classList.remove("hidden");
+            $winningPlayer.innerHTML = "NO ONE";
+
+            turnTimer(true);
+            return;
+          }
+
+          if (gameBoard[0][dataX] !== "") {
+            sec = 30;
+            clearInterval(timer);
+            turnTimer(false);
+            $gameScreenCurrentTurn.classList.add("red-turn");
+            $gameScreenCurrentTurn.classList.remove("yellow-turn");
+            $gameScreenCurrentTurnPlayer.innerHTML = `PLAYER 1’S TURN`;
+
+            $cursorColor.classList.remove("cursor-yellow");
+            $cursorColor.classList.add("cursor-red");
+
+            currentPlayer = "r";
+            return;
+          } else {
+            sec = 30;
+            clearInterval(timer);
+            turnTimer(false);
+            $gameScreenCurrentTurn.classList.add("red-turn");
+            $gameScreenCurrentTurn.classList.remove("yellow-turn");
+            $gameScreenCurrentTurnPlayer.innerHTML = `PLAYER 1’S TURN`;
+
+            $cursorColor.classList.remove("cursor-yellow");
+            $cursorColor.classList.add("cursor-red");
+
+            currentPlayer = "r";
+          }
+        }
       }
     }
   });
